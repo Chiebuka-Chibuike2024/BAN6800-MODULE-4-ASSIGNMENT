@@ -1,0 +1,129 @@
+                         TELCO CUSTOMER CHURN PREDICTION USING LOGISTIC REGRESSION MODELING TECHNIQUE
+
+This project uses a Logistic Regression Model to predict customer churn based on historical data from a telecommunications company. The goal is to help the business identify customers who are likely to leave and implement strategies to retain them.
+
+                                             MODEL EVALUATION RESULTS
+											   CLASSIFICATION REPORT
+          Metric	                  Class 0 (No Churn)	                 Class 1 (Churn)
+ Precision	                             0.85	                               0.65
+ Recall	                                     0.89	                               0.57
+ F1-score	                             0.87	                               0.61
+ Support	                             1033	                               374
+
+Precision: Of all customers predicted as churners, 65% were correctly classified (Class 1). For non-churners (Class 0), the precision is higher at 85%, meaning the model is more confident and accurate when predicting customers who will stay.
+
+Recall: The model captured 89% of the actual non-churners but only 57% of actual churners. This indicates challenges in identifying churners, possibly due to class imbalance or overlapping feature patterns.
+
+F1-Score: The F1-score for churners (Class 1) is 0.61, reflecting the trade-off between precision and recall. This score is considerably lower than the 0.87 for non-churners. This score indicates the model's moderate churn prediction capability.
+
+                                             CONFUSION MATRIX RESULTS
+
+
+               Predicted
+             |  No | Yes |
+Actual | No  | 916 | 117 |
+       | Yes | 159 | 215 |
+
+Interpretation:
+
+True Negatives (TN): 916 — Customers who did not churn and were correctly identified.
+
+True Positives (TP): 215 — Customers who churned and were correctly identified.
+
+False Negatives (FN): 159 — Customers who churned but were incorrectly predicted as non-churners.
+
+False Positives (FP): 117 — Customers who didn’t churn but were predicted to churn.
+
+Problem Area: The model struggles with false negatives, misclassifying 159 churners. This may pose a significant risk for a business aiming to retain customers, as these individuals could leave without being flagged.
+
+                                                     Overall Metrics
+
+Accuracy: 0.8038 — 80.38% of predictions were correct.
+
+ROC AUC Score: 0.8357 — Reflects strong class separation. 
+
+                                             STEP-BY-STEP IMPLEMENTATION PLAN
+
+Step 1: Data Acquisition
+
+- Load the original Telco Customer Churn dataset (.csv format).
+
+- Confirm data integrity: check for missing values, invalid entries, and column data types.
+
+Step 2: Data Preprocessing
+
+- Drop Irrelevant Columns: Remove customerID or any identifier not useful for prediction.
+
+- Handle Missing Values: Impute or drop missing entries (especially in TotalCharges, tenure, etc.).
+
+- Encode Categorical Variables:
+
+i) Binary encoding for Yes/No and Male/Female.
+
+ii) One-hot encoding for multi-category columns like Contract, PaymentMethod, etc.
+
+- Feature Engineering:
+
+i) Create new features like TotalSpend = MonthlyCharges * tenure.
+
+ii) Bin tenure into groups for easier interpretability.
+
+Step 3: Train/Test Split
+
+- Split the dataset into training and testing sets ( 80/20) to ensure unbiased evaluation.
+
+Step 4: Feature Scaling
+
+- Apply StandardScaler to normalize continuous features (e.g., MonthlyCharges, TotalCharges, etc.), ensuring the model converges efficiently.
+
+Step 5: Model Training
+
+- Instantiate and train a Logistic Regression model using code below:
+
+from sklearn.linear_model import LogisticRegression
+model = LogisticRegression(max_iter=1000, random_state=42)
+model.fit(X_train, y_train)
+
+Step 6: Model Evaluation
+- Evaluate on the test set using:
+
+i) Accuracy
+
+ii) Classification Report
+
+iii) Confusion Matrix
+
+iv) ROC AUC Score
+
+Step 7: Visualization
+
+- Visualize performance (e.g., ROC Curve, Confusion Matrix heatmap).
+
+Step 8: Model Deployment
+
+- Deploy in a dashboard or web app using Flask, or integrate into internal systems.
+
+Step 9: Monitoring & Retraining
+
+- Monitor the model's performance periodically.
+
+- Retrain with updated data to ensure long-term accuracy and relevance.
+
+
+                                                 TOOLS/LIBRARIES USED
+
+  Tool / Library	                           Purpose
+
+1) Python 3.11+	                                   Core programming language
+2) Pandas	                                   Data manipulation and analysis
+3) NumPy	                                   Numerical operations
+4) Scikit-learn (sklearn)	                   Machine learning (modeling, preprocessing, evaluation)
+5) Matplotlib	                                   Data visualization
+6) Seaborn	                                   Statistical data visualization
+7) PyCharm	                                   Integrated Development Environment (IDE)
+
+
+
+                                                  CONCLUSION
+
+This Logistic Regression model offers a strong baseline for predicting customer churn, achieving 80% accuracy and excellent ROC AUC performance. However, attention must be given to false negatives, as these represent lost churners the business might fail to retain.
